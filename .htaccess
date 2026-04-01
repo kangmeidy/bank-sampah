@@ -1,0 +1,17 @@
+
+
+Options -Indexes
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /bank_sampah/
+
+    # Serve static files that actually exist inside the public folder
+    RewriteCond %{REQUEST_URI} ^/bank_sampah/(.*)$
+    RewriteCond %{DOCUMENT_ROOT}/bank_sampah/public/%1 -f
+    RewriteRule ^(.*)$ public/$1 [L]
+
+    # All other requests (including the root directory) go to CodeIgniter
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^(.*)$ public/index.php/$1 [L]
+</IfModule>
