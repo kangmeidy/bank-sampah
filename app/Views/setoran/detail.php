@@ -10,7 +10,7 @@
             <div class="card-body">
                 <table id="tabel-detail-setoran" class="table table-bordered table-striped">
                     <thead>
-                        32
+                        
                             <th>ID Transaksi</th>
                             <th>Tanggal</th>
                             <th>Nasabah</th>
