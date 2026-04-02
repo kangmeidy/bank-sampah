@@ -152,7 +152,74 @@ $(document).ready(function() {
             row.find('.harga').val(hargaBeli);
             row.find('.satuan-cell').text(satuan);
             updateSubtotal(row);
+            // Pindah fokus ke kolom jumlah
+            row.find('.jumlah').focus();
         });
+
+        //$(document).on('keypress', '.jumlah', function(e) {
+        //if (e.which === 13) { // Enter
+        //    e.preventDefault();
+        //    $('#add-row').click();
+        //    // Pindah fokus ke kolom sampah baris baru
+        //    $('.detail-row:last .sampah-select').focus();
+        //}
+        //});
+
+       //  $(document).on('keypress', '.jumlah', function(e) {
+       // if (e.which === 13) { // Tombol Enter
+       //      e.preventDefault(); // Mencegah submit form
+       //      // Opsional: pindah ke field berikutnya (misal dari jumlah ke harga, atau tambah baris)
+       //      var row = $(this).closest('tr');
+       //      if ($(this).hasClass('jumlah')) {
+       //          row.find('.harga').focus();
+       //      } else if ($(this).hasClass('harga')) {
+       //          // Jika di harga, bisa tambah baris baru atau fokus ke tombol tambah
+       //          $('#add-row').click();
+       //          $('.detail-row:last .sampah-select').focus();
+       //      }
+       //  }
+       //  });
+
+        $(document).on('keypress', '.harga', function(e) {
+    if (e.which === 13) {
+        e.preventDefault();
+        var currentRow = $(this).closest('tr');
+        var currentJumlah = currentRow.find('.jumlah').val();
+        var currentHarga = currentRow.find('.harga').val();
+        if (currentJumlah && currentHarga) {
+            // Cek apakah ada baris kosong setelah ini (baris yang jumlah/harga kosong)
+            var nextRow = currentRow.next('tr');
+            if (nextRow.length) {
+                var nextJumlah = nextRow.find('.jumlah').val();
+                var nextHarga = nextRow.find('.harga').val();
+                if (!nextJumlah && !nextHarga) {
+                    // Baris berikutnya kosong, pindah ke sana
+                    nextRow.find('.sampah-select').focus();
+                } else {
+                    // Baris berikutnya sudah terisi, tambah baris baru
+                    $('#add-row').click();
+                    $('.detail-row:last .sampah-select').focus();
+                }
+            } else {
+                // Tidak ada baris berikutnya, tambah baris baru
+                $('#add-row').click();
+                $('.detail-row:last .sampah-select').focus();
+                }
+            }
+        }
+        });
+
+        $(document).on('keypress', '.subtotal', function(e) {
+    if (e.which === 13) {
+        e.preventDefault();
+    }
+});
+
+        $(document).on('keypress', 'input', function(e) {
+    if (e.which === 13 && $(this).closest('form').length) {
+        e.preventDefault();
+    }
+});
 
         // Add new row
         $('#add-row').click(function() {

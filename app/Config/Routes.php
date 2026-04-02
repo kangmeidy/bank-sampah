@@ -22,6 +22,7 @@ $routes->get('/penjualan-detail/belum-ada', 'PenjualanDetail::belumAda', ['filte
 $routes->get('/sampah', 'Sampah::index', ['filter' => 'auth']);
 $routes->get('/jenis', 'Jenis::index', ['filter' => 'auth']);
 $routes->get('/penjualan', 'Penjualan::index', ['filter' => 'auth']);
+$routes->get('/tarikdana', 'Tarikdana::index', ['filter' => 'auth']);
 
 // Setoran routes
 $routes->get('/setoran', 'Setoran::create', ['filter' => 'auth']);            // This is the main form

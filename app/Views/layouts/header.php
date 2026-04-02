@@ -31,6 +31,8 @@
         </ul>
 
         <!-- Right navbar links (hanya dropdown) -->
+        
+        <!--
         <ul class="navbar-nav ml-auto">
             <li class="nav-item dropdown">
                 <a class="nav-link" data-toggle="dropdown" href="#">
@@ -43,6 +45,18 @@
                 </div>
             </li>
         </ul>
+        -->
+
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="<?= base_url('logout') ?>">
+                    <i class="fas fa-sign-out-alt"></i> <?= session()->get('user_nama') ?> (<?= session()->get('bank_nama') ?? 'Bank' ?>) - Logout
+                </a>
+            </li>
+        </ul>
+
+
+
     </nav>
 
     <!-- Main Sidebar Container -->
