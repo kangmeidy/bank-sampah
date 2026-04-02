@@ -32,6 +32,7 @@ class LaporanModel extends Model
                 all_trans.total_nilai,
                 all_trans.tanggal_tarik,
                 all_trans.jumlah_dana,
+                all_trans.biaya_admin,
                 all_trans.tgl_order,
                 SUM(
                     CASE
@@ -50,6 +51,7 @@ class LaporanModel extends Model
                     SUM(d.jumlah * d.harga) AS total_nilai,
                     NULL AS tanggal_tarik,
                     NULL AS jumlah_dana,
+                    NULL AS biaya_admin,
                     h.tanggal AS tgl_order
                 FROM tb_terima_header h
                 JOIN tb_terima_detail d ON h.trx_id = d.trx_id
@@ -65,7 +67,8 @@ class LaporanModel extends Model
                     NULL AS tanggal_setor,
                     NULL AS total_nilai,
                     t.tanggal AS tanggal_tarik,
-                    -1 * t.jumlah_dana AS jumlah_dana,
+                    -1 * (t.jumlah_dana ) AS jumlah_dana,
+                    t.biaya_admin,
                     t.tanggal AS tgl_order
                 FROM tb_tarik_dana t
                 WHERE EXISTS (

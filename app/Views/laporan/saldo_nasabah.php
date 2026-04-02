@@ -24,6 +24,7 @@
                             <th>Setoran (Rp)</th>
                             <th>Tanggal Penarikan</th>
                             <th>Penarikan (Rp)</th>
+                            <th>Bea admin (Rp)</th>
                             <th>Saldo (Rp)</th>
                         </tr>
                     </thead>
@@ -36,6 +37,7 @@
                             <td class="text-right"><?= $row['total_nilai'] ? number_format($row['total_nilai'], 0, ',', '.') : '-' ?></td>
                             <td><?= $row['tanggal_tarik'] ? date('d-m-Y', strtotime($row['tanggal_tarik'])) : '-' ?></td>
                             <td class="text-right"><?= ($row['jumlah_dana'] !== null) ? number_format(abs($row['jumlah_dana']), 0, ',', '.') : '-' ?></td>
+                            <td class="text-right"><?= ($row['biaya_admin'] !== null) ? number_format(abs($row['biaya_admin']), 0, ',', '.') : '-' ?></td>
                             <td class="text-right"><?= number_format($row['saldo'], 0, ',', '.') ?></td>
                         </tr>
                         <?php endforeach; ?>
