@@ -10,7 +10,7 @@
             <div class="card-body">
                 <table id="tabel-detail-setoran" class="table table-bordered table-striped">
                     <thead>
-                        
+                        <tr>
                             <th>ID Transaksi</th>
                             <th>Tanggal</th>
                             <th>Nasabah</th>
@@ -21,7 +21,7 @@
                             <th>Satuan</th>
                             <th>Jenis</th>
                             <th>Aksi</th>
-                        </thead>
+                        </tr>
                     </thead>
                     <tbody>
                         <?php foreach ($transactions as $row): ?>
@@ -37,6 +37,7 @@
                             <td><?= esc($row['jenis_nama']) ?></td>
                             <td>
                                 <a href="<?= base_url('setoran/edit/'.$row['trx_id']) ?>" class="btn btn-sm btn-info">Edit Transaksi</a>
+                                <a href="<?= base_url('setoran/cetak/'.$row['trx_id']) ?>" target="_blank" class="btn btn-sm btn-success">Cetak</a>
                             </td>
                         </tr>
                         <?php endforeach; ?>
@@ -47,15 +48,34 @@
     </div>
 </div>
 
-<script>
-$(document).ready(function() {
-    if ($('#tabel-detail-setoran').length) {
-        $('#tabel-detail-setoran').DataTable({
-            responsive: true,
-            order: [[0, 'desc']],
-            columnDefs: [{ orderable: false, targets: [9] }],
-            language: { url: "//cdn.datatables.net/plug-ins/1.13.4/i18n/id.json" }
-        });
-    }
-});
-</script>
+<!-- Modal Konfirmasi Cetak -->
+<div class="modal fade" id="modalCetak" tabindex="-1" role="dialog" aria-labelledby="modalCetakLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalCetakLabel">Cetak Bukti Setoran</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Apakah Anda ingin mencetak bukti setoran?
+            </div>
+            
+            <!--
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
+                <button type="button" class="btn btn-primary" id="btnCetakYa">Ya, Cetak</button>
+            </div>
+            -->
+
+
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
+            <button type="button" class="btn btn-primary" id="btnCetakYa">Ya, Cetak</button>
+            <button type="button" class="btn btn-success" id="btnCetakTambah">Cetak & Tambah Lagi</button>
+</div>
+        </div>
+    </div>
+</div>
+

@@ -25,10 +25,23 @@ $routes->get('/penjualan', 'Penjualan::index', ['filter' => 'auth']);
 $routes->get('/tarikdana', 'Tarikdana::index', ['filter' => 'auth']);
 
 // Setoran routes
-$routes->get('/setoran', 'Setoran::create', ['filter' => 'auth']);            // This is the main form
+// $routes->get('/setoran', 'Setoran::create', ['filter' => 'auth']);            // This is the main form
+// $routes->get('/setoran/create', 'Setoran::create', ['filter' => 'auth']);
+// $routes->post('/setoran/store', 'Setoran::store', ['filter' => 'auth']);
+// $routes->get('/setoran/edit/(:any)', 'Setoran::edit/$1', ['filter' => 'auth']);
+// $routes->post('/setoran/update/(:any)', 'Setoran::update/$1', ['filter' => 'auth']);
+// $routes->get('/setoran/delete/(:any)', 'Setoran::delete/$1', ['filter' => 'auth']);
+// $routes->get('/setoran/detail', 'Setoran::detail', ['filter' => 'auth']);
+
+// $routes->get('/setoran/cetak/(:any)', 'Setoran::cetakBukti/$1', ['filter' => 'auth']);
+
+
+
+$routes->get('/setoran', 'Setoran::create', ['filter' => 'auth']);
 $routes->get('/setoran/create', 'Setoran::create', ['filter' => 'auth']);
 $routes->post('/setoran/store', 'Setoran::store', ['filter' => 'auth']);
 $routes->get('/setoran/edit/(:any)', 'Setoran::edit/$1', ['filter' => 'auth']);
 $routes->post('/setoran/update/(:any)', 'Setoran::update/$1', ['filter' => 'auth']);
 $routes->get('/setoran/delete/(:any)', 'Setoran::delete/$1', ['filter' => 'auth']);
 $routes->get('/setoran/detail', 'Setoran::detail', ['filter' => 'auth']);
+$routes->get('/setoran/cetak/(:any)', 'Setoran::cetakBukti/$1', ['filter' => 'auth']);

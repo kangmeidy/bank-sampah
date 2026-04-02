@@ -15,16 +15,20 @@
 <!-- AdminLTE App -->
 <script src="<?= base_url('assets/adminlte/dist/js/adminlte.min.js') ?>"></script>
 
-<!-- DataTables (combined CSS+JS) -->
+<!-- DataTables (combined) -->
 <link rel="stylesheet" href="https://cdn.datatables.net/v/bs4/dt-1.13.4/datatables.min.css">
 <script src="https://cdn.datatables.net/v/bs4/dt-1.13.4/datatables.min.js"></script>
 
+<!-- Flatpickr -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/id.js"></script>
+
 <script>
 $(document).ready(function() {
-    // ----- Flatpickr (date picker) -----
-    var dateInput = document.getElementById("tanggal");
-    if (dateInput) {
-        flatpickr(dateInput, {
+    // Flatpickr on element with id "tanggal"
+    if ($('#tanggal').length) {
+        flatpickr("#tanggal", {
             dateFormat: "d-m-Y",
             altInput: true,
             altFormat: "d-m-Y",
@@ -33,30 +37,29 @@ $(document).ready(function() {
         });
     }
 
-    // ----- Laporan Saldo Table -----
+    // Laporan Saldo Table
     if ($('#tabel-saldo').length) {
         $('#tabel-saldo').DataTable({
             responsive: true,
             order: [[0, 'asc']],
             searching: false,
-            columnDefs: [{ orderable: false, targets: [2,3,4,5,6] }],
+            columnDefs: [{ orderable: false, targets: [1,2,3,4,5,6] }],
             language: { url: "//cdn.datatables.net/plug-ins/1.13.4/i18n/id.json" }
         });
     }
 
-    // ----- Detail Setoran Table -----
+    // Detail Setoran Table
     if ($('#tabel-detail-setoran').length) {
         $('#tabel-detail-setoran').DataTable({
             responsive: true,
             order: [[0, 'desc']],
-            columnDefs: [{ orderable: false, targets: [4,5,6,7,8,9] }],
+            columnDefs: [{ orderable: false, targets: [9] }],
             language: { url: "//cdn.datatables.net/plug-ins/1.13.4/i18n/id.json" }
         });
     }
 
-    // ----- Setoran Form -----
+    // Setoran Form dynamic rows & calculations
     if ($('#form-setoran').length) {
-        // Helper functions
         function updateSubtotal(row) {
             var jumlah = parseFloat(row.find('.jumlah').val()) || 0;
             var harga = parseFloat(row.find('.harga').val()) || 0;
@@ -73,13 +76,11 @@ $(document).ready(function() {
             $('#total').val(total.toFixed(2));
         }
 
-        // Event: input on jumlah/harga
         $(document).on('input', '.jumlah, .harga', function() {
             var row = $(this).closest('tr');
             updateSubtotal(row);
         });
 
-        // Event: change on sampah-select
         $(document).on('change', '.sampah-select', function() {
             var row = $(this).closest('tr');
             var selected = $(this).find('option:selected');
@@ -88,11 +89,9 @@ $(document).ready(function() {
             row.find('.harga').val(hargaBeli);
             row.find('.satuan-cell').text(satuan);
             updateSubtotal(row);
-            // Fokus ke kolom jumlah
             row.find('.jumlah').focus();
         });
 
-        // Event: Enter pada .harga (tambah baris jika sudah terisi)
         $(document).on('keypress', '.harga', function(e) {
             if (e.which === 13) {
                 e.preventDefault();
@@ -118,14 +117,12 @@ $(document).ready(function() {
             }
         });
 
-        // Prevent form submit on Enter for subtotal and other inputs
         $(document).on('keypress', '.subtotal, input', function(e) {
             if (e.which === 13 && $(this).closest('form').length) {
                 e.preventDefault();
             }
         });
 
-        // Add new row
         $('#add-row').click(function() {
             var newRow = $('.detail-row:first').clone();
             newRow.find('input').val('');
@@ -135,7 +132,6 @@ $(document).ready(function() {
             $('#detail-table tbody').append(newRow);
         });
 
-        // Remove row
         $(document).on('click', '.btn-remove', function() {
             if ($('.detail-row').length > 1) {
                 $(this).closest('tr').remove();
@@ -145,8 +141,26 @@ $(document).ready(function() {
             }
         });
 
-        // Initial total (for edit mode)
         updateTotal();
+    }
+
+    // Modal Cetak after saving (only on detail page)
+    if ($('#tabel-detail-setoran').length) {
+        const urlParams = new URLSearchParams(window.location.search);
+        const trxId = urlParams.get('cetak');
+        if (trxId) {
+            $('#modalCetak').modal('show');
+            $('#btnCetakYa').click(function() {
+                window.open('<?= base_url('setoran/cetak/') ?>' + trxId, '_blank');
+                $('#modalCetak').modal('hide');
+            });
+            $('#btnCetakTambah').click(function() {
+                window.open('<?= base_url('setoran/cetak/') ?>' + trxId, '_blank');
+                window.location.href = '<?= base_url('setoran/create') ?>';
+            });
+            // Remove parameter from URL
+            history.replaceState(null, '', window.location.pathname);
+        }
     }
 });
 </script>
