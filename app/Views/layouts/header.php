@@ -5,10 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= $title ?? 'Bank Sampah' ?></title>
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/id.js"></script>
+
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 
-    <!-- Font Awesome Icons (dari AdminLTE plugin) -->
+    <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="<?= base_url('assets/adminlte/plugins/fontawesome-free/css/all.min.css') ?>">
 
     <!-- Theme style (AdminLTE CSS) -->
@@ -26,8 +30,7 @@
             </li>
         </ul>
 
-        
-        <!-- Right navbar links -->
+        <!-- Right navbar links (hanya dropdown) -->
         <ul class="navbar-nav ml-auto">
             <li class="nav-item dropdown">
                 <a class="nav-link" data-toggle="dropdown" href="#">
@@ -39,15 +42,7 @@
                     </a>
                 </div>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="<?= base_url('logout') ?>" role="button">
-                    <i class="fas fa-sign-out-alt"></i> Logout
-                </a>
-            </li>
         </ul>
-
-
-
     </nav>
 
     <!-- Main Sidebar Container -->
@@ -59,51 +54,14 @@
 
         <!-- Sidebar -->
         <div class="sidebar">
-            <!-- Sidebar Menu -->
             <nav class="mt-2">
-                
-
-                <!-- 
-                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu">
-                -->
-                
-
                 <?php
                 $menuModel = new \App\Models\MenuModel();
                 $menuTree = $menuModel->getMenuItems();
                 $menuHtml = $menuModel->buildMenu($menuTree);
                 ?>
-
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                     <?= $menuHtml ?>
-                </ul>
-
-
-
-                    <li class="nav-item">
-                        <a href="<?= base_url('dashboard') ?>" class="nav-link">
-                            <i class="nav-icon fas fa-tachometer-alt"></i>
-                            <p>Dashboard</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-trash-alt"></i>
-                            <p>Data Sampah</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-users"></i>
-                            <p>Nasabah</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                    <a href="<?= base_url('stok') ?>" class="nav-link">
-                    <i class="nav-icon fas fa-boxes"></i>
-                    <p>Data Stok</p>
-                    </a>
-                    </li>
                 </ul>
             </nav>
         </div>
@@ -111,7 +69,7 @@
 
     <!-- Content Wrapper -->
     <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
+        <!-- Content Header -->
         <div class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">

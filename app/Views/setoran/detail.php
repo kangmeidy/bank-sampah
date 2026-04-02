@@ -10,7 +10,7 @@
             <div class="card-body">
                 <table id="tabel-detail-setoran" class="table table-bordered table-striped">
                     <thead>
-                        <tr>
+                        32
                             <th>ID Transaksi</th>
                             <th>Tanggal</th>
                             <th>Nasabah</th>
@@ -47,3 +47,15 @@
     </div>
 </div>
 
+<script>
+$(document).ready(function() {
+    if ($('#tabel-detail-setoran').length) {
+        $('#tabel-detail-setoran').DataTable({
+            responsive: true,
+            order: [[0, 'desc']],
+            columnDefs: [{ orderable: false, targets: [9] }],
+            language: { url: "//cdn.datatables.net/plug-ins/1.13.4/i18n/id.json" }
+        });
+    }
+});
+</script>
