@@ -13,6 +13,7 @@ class Login extends BaseController
         return view('login');
     }
 
+
     public function authenticate()
     {
         $session = session();
@@ -25,11 +26,17 @@ class Login extends BaseController
 
         if ($user) {
             if (password_verify($password, $user['password'])) {
+                // Get bank name
+                $bankModel = new \App\Models\BankModel();
+                $bank = $bankModel->find($user['bank_id']);
+                $bank_nama = $bank ? $bank['bank_nama'] : 'Unknown Bank';
+
                 $sessionData = [
                     'user_id'   => $user['user_id'],
                     'user_nama' => $user['user_nama'],
                     'level_id'  => $user['level_id'],
                     'bank_id'   => $user['bank_id'],
+                    'bank_nama' => $bank_nama,
                     'isLoggedIn'=> true
                 ];
                 $session->set($sessionData);
@@ -44,6 +51,8 @@ class Login extends BaseController
         }
     }
 
+
+    
     public function logout()
     {
         session()->destroy();

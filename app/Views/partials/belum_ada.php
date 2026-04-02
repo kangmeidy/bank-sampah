@@ -5,7 +5,7 @@
                 <h3 class="card-title">Informasi</h3>
             </div>
             <div class="card-body text-center">
-                <h4>Fitur Detail Penjualan Sedang Dibangun</h4>
+                <h4>Fitur Modul sedang dibuat</h4>
                 <p>Mohon bersabar, fitur ini akan segera tersedia.</p>
                 <a href="<?= base_url('dashboard') ?>" class="btn btn-primary">Kembali ke Dashboard</a>
             </div>

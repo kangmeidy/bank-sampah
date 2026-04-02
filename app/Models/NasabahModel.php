@@ -15,16 +15,21 @@ class NasabahModel extends Model
 
     
     // Tambahkan method ini
-    public function getByBank($bankId, $orderBy = 'nasabah_id', $orderDir = 'ASC')
-    {
-        return $this->where('bank_id', $bankId)
-                    ->orderBy($orderBy, $orderDir)
-                    ->findAll();
-    }
+    //public function getByBank($bankId, $orderBy = 'nasabah_id', $orderDir = 'ASC')
+    //{
+    //    return $this->where('bank_id', $bankId)
+    //                ->orderBy($orderBy, $orderDir)
+    //                ->findAll();
+    //}
 
     public function countByBank($bankId)
 	{
 	    return $this->where('bank_id', $bankId)->countAllResults();
 	}
+
+    public function getByBank($bankId)
+    {
+        return $this->where('bank_id', $bankId)->orderBy('nasabah_nama', 'ASC')->findAll();
+    }
 
 }

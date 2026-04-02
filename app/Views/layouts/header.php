@@ -29,6 +29,16 @@
         
         <!-- Right navbar links -->
         <ul class="navbar-nav ml-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link" data-toggle="dropdown" href="#">
+                    <i class="fas fa-user"></i> <?= session()->get('user_nama') ?> (<?= session()->get('bank_nama') ?? 'Bank' ?>)
+                </a>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a href="<?= base_url('logout') ?>" class="dropdown-item">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </a>
+                </div>
+            </li>
             <li class="nav-item">
                 <a class="nav-link" href="<?= base_url('logout') ?>" role="button">
                     <i class="fas fa-sign-out-alt"></i> Logout

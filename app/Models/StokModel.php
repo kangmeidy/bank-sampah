@@ -7,10 +7,10 @@ use CodeIgniter\Model;
 class StokModel extends Model
 {
     protected $table = 'tb_stok';
-    protected $primaryKey = 'stok_id'; // tetap diisi meski tidak dipakai langsung di builder
+    protected $primaryKey = 'stok_id';
     protected $allowedFields = [];
 
-    public function getAllStokWithDetails()
+    public function getAllStokWithDetails($bankId = null)
     {
         $builder = $this->db->table('tb_stok a');
         $builder->select('
@@ -31,11 +31,17 @@ class StokModel extends Model
         $builder->join('tb_sampah b', 'a.sampah_id = b.sampah_id', 'left');
         $builder->join('tb_satuan c', 'b.satuan_id = c.satuan_id', 'left');
         $builder->join('tb_jenis d', 'b.jenis_id = d.jenis_id', 'left');
-        $builder->orderBy('b.sampah_nama', 'ASC'); 
+
+        // Filter by bank_id if provided
+        if ($bankId !== null) {
+            $builder->where('a.bank_id', $bankId);
+        }
+
+        $builder->orderBy('b.sampah_nama', 'ASC');
         return $builder->get()->getResultArray();
     }
 
-    public function getKomposisiStok()
+    public function getKomposisiStok($bankId = null)
     {
         $builder = $this->db->table('tb_stok a');
         $builder->select('
@@ -45,11 +51,14 @@ class StokModel extends Model
         ');
         $builder->join('tb_sampah b', 'a.sampah_id = b.sampah_id', 'left');
         $builder->join('tb_jenis d', 'b.jenis_id = d.jenis_id', 'left');
+
+        // Filter by bank_id if provided
+        if ($bankId !== null) {
+            $builder->where('a.bank_id', $bankId);
+        }
+
         $builder->groupBy('d.jenis_id, d.jenis_nama');
         $builder->orderBy('total_nilai', 'DESC');
         return $builder->get()->getResultArray();
     }
-
-
-    
 }
