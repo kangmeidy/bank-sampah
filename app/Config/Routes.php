@@ -45,3 +45,19 @@ $routes->post('/setoran/update/(:any)', 'Setoran::update/$1', ['filter' => 'auth
 $routes->get('/setoran/delete/(:any)', 'Setoran::delete/$1', ['filter' => 'auth']);
 $routes->get('/setoran/detail', 'Setoran::detail', ['filter' => 'auth']);
 $routes->get('/setoran/cetak/(:any)', 'Setoran::cetakBukti/$1', ['filter' => 'auth']);
+
+
+
+
+// Tarik dana nasabah
+$routes->get('/tarikdana', 'TarikDana::index', ['filter' => 'auth']);
+$routes->get('/tarikdana/create', 'TarikDana::create', ['filter' => 'auth']);
+$routes->post('/tarikdana/store', 'TarikDana::store', ['filter' => 'auth']);
+$routes->get('/tarikdana/edit/(:any)', 'TarikDana::edit/$1', ['filter' => 'auth']);
+$routes->post('/tarikdana/update/(:any)', 'TarikDana::update/$1', ['filter' => 'auth']);
+$routes->get('/tarikdana/delete/(:any)', 'TarikDana::delete/$1', ['filter' => 'auth']);
+$routes->get('/tarikdana/cetak/(:any)', 'TarikDana::cetakBukti/$1', ['filter' => 'auth']);
+
+
+
+$routes->get('/tarikdana/getSaldo/(:any)', 'TarikDana::getSaldo/$1', ['filter' => 'auth']);

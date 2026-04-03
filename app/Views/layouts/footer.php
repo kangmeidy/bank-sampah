@@ -26,7 +26,74 @@
 
 <script>
 $(document).ready(function() {
-    // Flatpickr on element with id "tanggal"
+
+    // ----- TARIK DANA FORM (create & edit) -----
+    if ($('#form-tarik').length) {
+        var nasabahSelect = $('#nasabah_id');
+        var saldoField = $('#saldo');
+        var jumlahInput = $('#jumlah_dana');
+        var form = $('#form-tarik');
+        
+        <?php if (isset($isEdit) && $isEdit && isset($header['trx_id'])): ?>
+        var excludeTrx = '<?= $header['trx_id'] ?>';
+        <?php else: ?>
+        var excludeTrx = '';
+        <?php endif; ?>
+
+        function loadSaldo(nasabahId) {
+            if (nasabahId) {
+                var url = '<?= base_url('tarikdana/getSaldo/') ?>' + nasabahId;
+                if (excludeTrx) {
+                    url += '?exclude=' + excludeTrx;
+                }
+                $.ajax({
+                    url: url,
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response.saldo !== undefined) {
+                            saldoField.val('Rp ' + response.saldo.toLocaleString('id-ID'));
+                            saldoField.data('saldo_numeric', response.saldo);
+                        } else if (response.error) {
+                            console.error('Server error:', response.error);
+                            saldoField.val('Error: ' + response.error);
+                        } else {
+                            saldoField.val('Invalid response');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('AJAX error:', status, error, xhr.responseText);
+                        saldoField.val('Gagal load saldo (status ' + status + ')');
+                    }
+                });
+            } else {
+                saldoField.val('');
+                saldoField.data('saldo_numeric', 0);
+            }
+        }
+
+        nasabahSelect.off('change').on('change', function() {
+            loadSaldo($(this).val());
+        });
+
+        // Validasi dengan alert biasa
+        form.on('submit', function(e) {
+            var jumlah = parseFloat(jumlahInput.val()) || 0;
+            var saldo = saldoField.data('saldo_numeric') || 0;
+            if (jumlah > saldo) {
+                e.preventDefault();
+                alert('Jumlah penarikan melebihi saldo nasabah (Saldo: Rp ' + saldo.toLocaleString('id-ID') + ')');
+                return false;
+            }
+            return true;
+        });
+
+        if (nasabahSelect.val()) {
+            loadSaldo(nasabahSelect.val());
+        }
+    }
+
+    // ----- Flatpickr (tanggal) -----
     if ($('#tanggal').length) {
         flatpickr("#tanggal", {
             dateFormat: "d-m-Y",
@@ -37,7 +104,7 @@ $(document).ready(function() {
         });
     }
 
-    // Laporan Saldo Table
+    // ----- Laporan Saldo Table -----
     if ($('#tabel-saldo').length) {
         $('#tabel-saldo').DataTable({
             responsive: true,
@@ -48,7 +115,7 @@ $(document).ready(function() {
         });
     }
 
-    // Detail Setoran Table
+    // ----- Detail Setoran Table -----
     if ($('#tabel-detail-setoran').length) {
         $('#tabel-detail-setoran').DataTable({
             responsive: true,
@@ -58,7 +125,7 @@ $(document).ready(function() {
         });
     }
 
-    // Setoran Form dynamic rows & calculations
+    // ----- Setoran Form dynamic rows & calculations -----
     if ($('#form-setoran').length) {
         function updateSubtotal(row) {
             var jumlah = parseFloat(row.find('.jumlah').val()) || 0;
@@ -144,7 +211,7 @@ $(document).ready(function() {
         updateTotal();
     }
 
-    // Modal Cetak after saving (only on detail page)
+    // ----- Modal Cetak setelah simpan (halaman detail setoran) -----
     if ($('#tabel-detail-setoran').length) {
         const urlParams = new URLSearchParams(window.location.search);
         const trxId = urlParams.get('cetak');
@@ -158,7 +225,6 @@ $(document).ready(function() {
                 window.open('<?= base_url('setoran/cetak/') ?>' + trxId, '_blank');
                 window.location.href = '<?= base_url('setoran/create') ?>';
             });
-            // Remove parameter from URL
             history.replaceState(null, '', window.location.pathname);
         }
     }

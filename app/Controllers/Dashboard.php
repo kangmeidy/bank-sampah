@@ -14,12 +14,24 @@ class Dashboard extends BaseController
     public function index()
     {
 
-        $bankId = session()->get('bank_id'); // ambil dari session
+        
+
+        //$bankId = session()->get('bank_id'); // ambil dari session
+        $bankId = session()->get('bank_id') ?? 1; // <-- di sini paksa diisi 1 kalo NULL
+
+         $stokModel = new \App\Models\StokModel();
+    $komposisi = $stokModel->getKomposisiStok($bankId); // <-- WAJIB kirim parameter
+
+        var_dump($bankId); 
+        //die();
 
 
         //die('Controller Dashboard dipanggil'); // tambahkan ini untuk test
 
         $bank_id = session()->get('bank_id') ?? 1; // asumsi bank_id dari session SEMENTARA
+
+
+
 
         // Hitung total nasabah
         //$model = new NasabahModel();

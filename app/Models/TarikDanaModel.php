@@ -6,9 +6,12 @@ use CodeIgniter\Model;
 
 class TarikDanaModel extends Model
 {
+   
+
     protected $table = 'tb_tarik_dana';
-    protected $primaryKey = 'id_tarik'; // sesuaikan
-    protected $allowedFields = []; // atau daftar field jika perlu
+    protected $primaryKey = 'trx_id';
+    protected $allowedFields = ['trx_id', 'tanggal', 'nasabah_id', 'jumlah_dana', 'catatan', 'user_id', 'bank_id', 'biaya_admin', 'printed_at'];
+    protected $useTimestamps = false;
 
     /**
      * Mendapatkan total penarikan tahun ini untuk bank tertentu
@@ -33,3 +36,5 @@ class TarikDanaModel extends Model
         return $result->total ?? 0;
     }
 }
+
+
