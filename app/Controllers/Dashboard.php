@@ -22,7 +22,7 @@ class Dashboard extends BaseController
          $stokModel = new \App\Models\StokModel();
     $komposisi = $stokModel->getKomposisiStok($bankId); // <-- WAJIB kirim parameter
 
-        var_dump($bankId); 
+        //var_dump($bankId); 
         //die();
 
 

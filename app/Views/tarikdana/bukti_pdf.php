@@ -22,7 +22,7 @@
 <div class="container">
     <div class="header">
         <h2>BUKTI PENARIKAN DANA</h2>
-        <p>Bank Sampah <?= esc($bank_nama) ?></p>
+        <p><?= esc($bank_nama) ?></p>
     </div>
     <div class="info">
         <p><strong>ID Transaksi:</strong> <?= $header['trx_id'] ?></p>

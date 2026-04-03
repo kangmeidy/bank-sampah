@@ -14,6 +14,11 @@ $header = $header ?? null;
                     <input type="hidden" name="trx_id" value="<?= $header['trx_id'] ?>">
                 <?php endif; ?>
                 <div class="card-body">
+
+                    <?php if (session()->getFlashdata('error')): ?>
+                        <div class="alert alert-danger"><?= session()->getFlashdata('error') ?></div>
+                    <?php endif; ?>
+                
                     <div class="form-group">
                         <label>Nasabah</label>
                         <select name="nasabah_id" id="nasabah_id" class="form-control" required>
@@ -37,9 +42,17 @@ $header = $header ?? null;
                         <label>Jumlah Penarikan (Rp)</label>
                         <input type="number" name="jumlah_dana" id="jumlah_dana" class="form-control" step="100" value="<?= $isEdit ? $header['jumlah_dana'] : '' ?>" required>
                     </div>
+                    <!--
                     <div class="form-group">
                         <label>Biaya Admin (Rp)</label>
-                        <input type="number" name="biaya_admin" class="form-control" step="100" value="<?= $isEdit ? $header['biaya_admin'] : 0 ?>">
+                        <input type="number" name="biaya_admin" class="form-control" step="100" value="<?= $isEdit ? $header['biaya_admin'] : 0 ?>">disabled
+                    </div>
+                    -->
+
+                    <div class="form-group">
+                        <label>Biaya Admin (Rp)</label>
+                        <input type="number" name="biaya_admin" class="form-control" step="100" 
+                               value="<?= $isEdit ? $header['biaya_admin'] : 0 ?>" disabled>
                     </div>
                     <div class="form-group">
                         <label>Catatan</label>
